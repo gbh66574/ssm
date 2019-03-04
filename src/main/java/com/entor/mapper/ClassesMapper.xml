@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Classes">
+
+	<insert id="add" parameterType="Classes">
+		insert into classes(name)
+		values(#{name})
+	</insert>
+	<insert id="addMore">
+	insert into classes(name)values
+	<foreach collection="list" item="s" separator=",">
+	(#{s.name})
+	</foreach>
+	</insert>
+	<update id="update" parameterType="Classes">
+		update classes set
+		name=#{name}
+		where id=#{id}
+	</update>
+	<select id="queryById" parameterType="int" resultType="Classes">
+	select * from classes where id=#{id}
+	</select>
+	<select id="queryAll"  resultType="Classes">
+	select * from classes where id&lt;100
+	</select>
+	<select id="queryByPage" parameterType="map" resultType="Classes">
+	select * from classes limit #{start},#{pageSize}
+	</select>
+	<select id="queryByUsername"   resultType="Classes">
+	select * from classes where username like #{username}
+	</select>
+	<select id="getTotals" resultType="int">
+	select count(*) from classes
+	</select>
+	<delete id="deleteById">
+	delete from classes where id=#{id}
+	</delete>
+	<delete id="deleteMore">
+	delete from classes where id in
+	<foreach collection="array" open="(" close=")" separator="," item="id">
+	#{id}
+	</foreach>
+	</delete>
+	
+</mapper>
